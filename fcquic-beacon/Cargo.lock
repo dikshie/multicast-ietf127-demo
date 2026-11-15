@@ -601,13 +601,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "crypto-pan"
-version = "0.1.0"
-dependencies = [
- "boring",
-]
-
-[[package]]
 name = "darling"
 version = "0.20.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1737,14 +1730,6 @@ name = "lazy_static"
 version = "1.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20870f649af7073d53e38067b2a84312175d56ea15217e1b15bc83506ec50afb"
-
-[[package]]
-name = "libamt"
-version = "0.1.0"
-dependencies = [
- "cc",
- "libc",
-]
 
 [[package]]
 name = "libc"
@@ -3127,17 +3112,14 @@ dependencies = [
  "chrono",
  "clap",
  "console-subscriber",
- "crypto-pan",
  "docopt",
  "env_logger 0.10.2",
  "itertools 0.10.5",
- "libamt",
  "libc",
  "log",
  "mio 0.8.11",
  "nix",
  "octets 0.3.0",
- "qlog",
  "quiche",
  "ring",
  "slab",

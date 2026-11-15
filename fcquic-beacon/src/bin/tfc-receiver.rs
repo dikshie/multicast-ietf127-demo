@@ -52,8 +52,8 @@ struct Args {
     /// Must be well above the source's `--fc-keepalive` interval (~3x, e.g.,
     /// 750 for a 250 ms keepalive). Without a keepalive on the source, an idle
     /// flexicast flow triggers a spurious switch to AMT after this delay.
-    // #[clap(long = "amt-fallback-delay", value_parser, default_value = "750")]
-    // amt_fallback_delay: u64,
+    #[clap(long = "amt-fallback-delay", value_parser, default_value = "750")]
+    amt_fallback_delay: u64,
 
     // ----- FCQUIC specific arguments --------
     /// whether or not the hash of the payloads is checked
@@ -75,7 +75,7 @@ async fn main() {
     // Create the Flexicast Quiche tokio receiver.
     let peer_addr = *args.url.socket_addrs(|| None).unwrap().first().unwrap();
     let config = get_config(&args);
-    let (mut tfc_recv, rx_app) = TokioFcQuicRecv::new(
+    let (tfc_recv, rx_app) = TokioFcQuicRecv::new(
         peer_addr,
         config,
         args.local_ip,
@@ -86,6 +86,9 @@ async fn main() {
         args.amt_fallback_allowed,
         args.amt_relay_ip,
     );
+    let mut tfc_recv = tfc_recv.with_amt_fallback_delay(std::time::Duration::from_millis(
+        args.amt_fallback_delay,
+    ));
 
     tokio::spawn(async move {
         let mut rx_app = rx_app;
